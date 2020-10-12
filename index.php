@@ -1,28 +1,22 @@
 <?php
-class People {
-    public $name;
-    public $birth_day;
-    protected $place;
-    private $user_name;
+//this line makes PHP behave in a more strict way
+declare(strict_types=1);
 
-    function __construct ($name, $birth_day, $place) {
-        $this->name = $name;
-        $this->birth_day = $birth_day;
-        $this->place = $place;
-        echo "my name is $this->name and i am born in $this->birth_day and i am living in $this->place";
-    }
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
 
-    function say_hello($user_name) {
-        $this->user_name = $user_name;
-        echo "nice to meet you ms. $this->user_name";
-    }
-
-    function __destruct() {
-        // TODO: Implement __destruct() method.
-        echo "<br> good by ms. $this->user_name ";
-    }
-
-}
-$alex = new People(Awet, "01/Jan/1992", "Kortrijk");
-$alex->say_hello(John);
-echo "<br> it works";
+?>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action=""></form>
+</body>
+</html>
