@@ -6,6 +6,22 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
+require "Blackjack.php";
+require "Player.php";
+require "./code/Deck.php";
+require "./code/Suit.php";
+require "./code/Card.php";
+
+session_start();
+
+if(!isset($_SESSION['blackjack'])) {
+    $_SESSION['blackjack'] = "";
+}
+$blackJack = new Blackjack("awet", "computer", "21");
+if(isset($blackJack)) {
+    $_SESSION['blackjack'] = $blackJack;
+}
+
 ?>
 <!doctype html>
 <html lang="en">

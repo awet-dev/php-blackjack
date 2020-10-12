@@ -9,13 +9,12 @@ error_reporting(E_ALL);
 require "./code/Deck.php";
 
 class Player {
-    private array $cards;
+    private array $cards = [];
     private bool $lost = false;
 
     public function __construct(Deck $deck) {
-        $deck->drawCard();
-        $deck->drawCard();
-
+        array_push($this->cards, $deck->drawCard());
+        array_push($this->cards, $deck->drawCard());
     }
 
     function hit() {}
