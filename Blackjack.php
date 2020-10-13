@@ -1,10 +1,6 @@
 <?php
 declare(strict_types=1);
 
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
-
 class Blackjack {
     private Player $player;
     private Player $dealer;
@@ -14,8 +10,8 @@ class Blackjack {
         $deck = new Deck();
         $this->deck = $deck;
         $this->deck->shuffle();
-        $this->player = new Player($deck);
-        $this->dealer = new Player($deck);
+        $this->player = new Player($this->deck);
+        $this->dealer = new Player($this->deck);
     }
 
     function getPlayer () {
