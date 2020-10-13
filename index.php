@@ -10,41 +10,51 @@ require "Blackjack.php";
 require "./code/Card.php";
 require "./code/Deck.php";
 require "./code/Suit.php";
-require "view-form.php";
 
 session_start();
 if(!isset($_SESSION['blackJack'])) {
-    $_SESSION['blackJack'] = new Blackjack();
+    $blackJack = new Blackjack();
+    $_SESSION['blackJack'] = $blackJack;
+} else {
+    $blackJack = $_SESSION['blackJack'];
 }
 
 $player = $_SESSION['blackJack']->getPlayer();
 $dealer = $_SESSION['blackJack']->getDealer();
+$deck = $_SESSION['blackJack']->getDeck();
 
-if(isset($_POST['hit'])) {
-    play($player);
-}
-
-if (isset($_POST['surrender'])) {
-    $player->surrender();
-}
-
-if (isset($_POST['stand'])) {
-    play($dealer);
-}
-
-
-function play($gamer) {
-    var_dump($gamer->hit());
-    var_dump($gamer->getScore());
-
-    // if the card value is more than 21 set lost to true
-    if($gamer->getScore() > 21) {
-        $gamer->surrender(true);
+if (isset($_POST['action'])){
+    if ($_POST['action'] == 'hit') {
+        if ($player->hit($deck) == "true") {
+            echo "lost";
+        }
     }
+}
 
-    // total score of the cards
-    foreach($gamer->hit() AS $card) {
+?>
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .bigCard {
+            font-size: 600%;
+        }
+    </style>
+</head>
+<body>
+<p class="bigCard"><?php foreach($player->getCard ($deck) AS $card) {
         echo $card->getUnicodeCharacter(true);
-        echo '<br>';
-    }
-}
+    }?></p>
+<form method="post">
+    <input type="submit" name="action" value="hit">
+    <input type="submit" name="action" value="stand">
+    <input type="submit" name="action" value="surrender">
+</form>
+</body>
+</html>

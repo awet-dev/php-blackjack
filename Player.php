@@ -5,14 +5,18 @@ class Player {
 
     private array $cards;
     private bool $lost = false;
+    private bool $gameStart = false;
 
     function __construct(Deck $deck) {
         $this->cards = [];
-        array_push($this->cards, $deck->drawCard());
-        array_push($this->cards, $deck->drawCard());
+        array_push($this->cards, $deck->drawCard(), $deck->drawCard());
     }
 
-    function hit () {
+    function hit (Deck $deck) {
+        array_push($this->cards, $deck->drawCard());
+        if ($this->getScore() > 21) {
+            return $this->hasLost();
+        }
         return $this->cards;
     }
     function surrender () {
@@ -25,6 +29,11 @@ class Player {
         }
         return $score;
     }
-    function hasLost () {}
+    function hasLost () {
+        return $this->lost = true;
+    }
 
+    function getCard () {
+        return $this->cards;
+    }
 }

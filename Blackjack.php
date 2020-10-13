@@ -21,4 +21,9 @@ class Blackjack {
         return $this->dealer;
     }
 
+    function getDeck () {
+        return $this->deck;
+    }
+
+
 }
