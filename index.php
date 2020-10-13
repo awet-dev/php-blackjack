@@ -1,28 +1,37 @@
 <?php
-//this line makes PHP behave in a more strict way
 declare(strict_types=1);
 
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
-require "Blackjack.php";
+session_start();
+if(!isset($_SESSION['blackJack'])) {
+    $_SESSION['blackJack'] = "";
+}
+
 require "Player.php";
+require "Blackjack.php";
+require "./code/Card.php";
 require "./code/Deck.php";
 require "./code/Suit.php";
-require "./code/Card.php";
 
-session_start();
+$blackJack = new Blackjack();
+$player = $blackJack->getPlayer();
+$dealer = $blackJack->getDealer();
 
-if(!isset($_SESSION['blackjack'])) {
-    $_SESSION['blackjack'] = "";
-}
-$blackJack = new Blackjack("awet", "computer", "21");
 if(isset($blackJack)) {
-    $_SESSION['blackjack'] = $blackJack;
+    $_SESSION['blackJack'] = $blackJack;
+}
+if(isset($_POST['hit'])) {
+    echo "hit work";
+    $player = $blackJack->getPlayer();
+    var_dump($player->hit());
+    // if score more than 21 lost = true
 }
 
 ?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -33,6 +42,10 @@ if(isset($blackJack)) {
     <title>Document</title>
 </head>
 <body>
-    <form action=""></form>
+<form action="index.php" method="POST">
+    <input name="hit" type="submit" value="hit">
+    <input name="stand" type="submit" value="stand">
+    <input name="surrender" type="submit" value="surrender">
+</form>
 </body>
 </html>

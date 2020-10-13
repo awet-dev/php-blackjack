@@ -1,25 +1,29 @@
 <?php
-//this line makes PHP behave in a more strict way
 declare(strict_types=1);
 
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
-require "./code/Deck.php";
-
 class Player {
+
     private array $cards = [];
     private bool $lost = false;
 
-    public function __construct(Deck $deck) {
-        array_push($this->cards, $deck->drawCard());
-        array_push($this->cards, $deck->drawCard());
+    function __construct(Deck $deck) {
+        $this->cards [] = $deck->drawCard();
+        $this->cards [] = $deck->drawCard();
     }
 
-    function hit() {}
-    function surrender() {}
-    function getScore() {}
-    function hasLost() {}
-}
+    function hit () {
+        return $this->cards;
+    }
+    function surrender ($status) {
+        return $this->lost;
+    }
+    function getScore () {
+        // loop over all the card and display the total value
+    }
+    function hasLost () {}
 
+}
