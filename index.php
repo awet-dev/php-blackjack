@@ -12,6 +12,11 @@ require "Player.php";
 require "Blackjack.php";
 
 session_start();
+
+if (isset($_POST['start'])) {
+    session_unset();
+}
+
 if (!isset($_SESSION['blackJack'])) {
     $_SESSION['blackJack'] = new Blackjack();
 }

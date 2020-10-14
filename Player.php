@@ -25,7 +25,7 @@ class Player {
 
     function getScore () {
         $score = 0;
-        foreach ($this->card  as $value) {
+        foreach ($this->card as $value) {
             $score += $value->getValue();
         }
         return $score;
@@ -38,5 +38,4 @@ class Player {
     function getCard () {
         return $this->card;
     }
-
 }
