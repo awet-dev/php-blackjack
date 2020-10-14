@@ -1,0 +1,17 @@
+.container {
+    width: 80%;
+    margin: 10px auto;
+}
+.flex-content {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+.form {
+    width: 80%;
+    margin: auto;
+}
+.card {
+    font-size: 600%;
+}

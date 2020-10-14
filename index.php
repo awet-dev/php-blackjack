@@ -35,7 +35,7 @@ if (isset($_POST['surrender'])) {
 
 if (isset($_POST['stand'])) {
     $dealer->hit($deck);
-    if ($dealer->getScore() < 21 && $dealer->getScore() > 15) {
+    if ($dealer->getScore() < 21) {
         if ($dealer->getScore() >= $player->getScore()) {
             $player->setLost();
         } else {
@@ -53,33 +53,37 @@ if (isset($_POST['stand'])) {
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 <body>
-<div class="score">
-    <p class="playerScore"><?php echo "playerScore: ".$player->getScore()?></p>
-    <p class="dealerScore"><?php echo "dealerScore: ".$dealer->getScore()?></p>
+<div class="container">
+    <div class="flex-content">
+        <div class="col">
+            <p class="playerScore"><?php echo "playerScore: ".$player->getScore()?></p>
+            <p class="card"><?php foreach($player->getCard($deck) AS $card) {
+                    echo $card->getUnicodeCharacter(true);
+                }?></p>
+            <div class="result"><?php if($player->hasLost()) { echo "player has lost";}?></div>
+        </div>
+        <div class="col">
+            <p class="dealerScore"><?php echo "dealerScore: ".$dealer->getScore()?></p>
+            <p class="card"> <?php foreach($dealer->getCard($deck) AS $card) {
+                    echo $card->getUnicodeCharacter(true);
+                }?></p>
+            <div class="result"><?php if($dealer->hasLost()) {echo "dealer has lost";}?></div>
+        </div>
+    </div>
+    <form action="" method="post" class="form">
+        <?php if($player->hasLost() || $dealer->hasLost()) :?>
+            <input name="start" type="submit" value="Start">
+        <?php else :?>
+            <input name="hit" type="submit" value="Hit">
+            <input name="stand" type="submit" value="Stand">
+            <input name="surrender" type="submit" value="Surrender">
+        <?php endif; ?>
+    </form>
 </div>
-<div class="card-display">
-    <p><?php foreach($player->getCard($deck) AS $card) {
-            echo $card->getUnicodeCharacter(true);
-        }?></p>
-    <p> <?php foreach($dealer->getCard($deck) AS $card) {
-            echo $card->getUnicodeCharacter(true);
-        }?></p>
-</div>
-<div class="result"><?php if($player->hasLost()) { echo "player has lost";}
-    if($dealer->hasLost()) {echo "dealer has lost";}
-?></div>
-<form action="" method="post">
-    <?php if($player->hasLost() || $dealer->hasLost()) :?>
-        <input name="start" type="submit" value="Start">
-    <?php else :?>
-        <input name="hit" type="submit" value="Hit">
-        <input name="stand" type="submit" value="Stand">
-        <input name="surrender" type="submit" value="Surrender">
-    <?php endif; ?>
-</form>
 </body>
 </html>
 
