@@ -32,13 +32,14 @@ $deck = $_SESSION['blackJack']->getDeck();
 
 $errorInput = "border border-danger";
 $errorClass = "";
+$chipsTotal = 100;
 
 if (isset($_POST['hit'])) {
     $_SESSION['chip'] = $_POST['chip'];
     $chips = $_POST['chip'];
     if ($chips && $chips >= 5) {
         $player->hit($deck);
-        var_dump($player->eatChips($chips));
+        $chipsTotal = $player->eatChips($chips);
     } else {
         $errorClass = $errorInput;
     }
@@ -75,10 +76,13 @@ if (isset($_POST['stand'])) {
 </head>
 <body>
 <div class="container">
+    <div class="alert alert-success" role="alert">
+        <strong>You have => </strong> <?php echo $chipsTotal?></div>
     <?php if ($player->hasLost()) :?>
         <div class="alert alert-danger" role="alert">
             <strong>Oh sorry!</strong> You lost. the dealer has won the game</div>
     <?php elseif ($dealer->hasLost()) :?>
+        <?php $player->addChips(2*$_SESSION['chip']);?>
         <div class="alert alert-success" role="alert">
             <strong>Well done!</strong> You won the game super.</div>
     <?php endif;?>

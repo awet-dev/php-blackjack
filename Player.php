@@ -52,6 +52,9 @@ class Player {
         $this->chips -= $chip;
         return $this->chips;
     }
+    function addChips($prize) {
+        $this->chips += $prize;
+    }
 }
 
 class Dealer extends Player {
