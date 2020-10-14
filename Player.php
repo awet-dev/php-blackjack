@@ -39,6 +39,9 @@ class Player {
     function getCard () {
         return $this->card;
     }
+    function setLost () {
+        $this->lost = true;
+    }
 }
 
 class Dealer extends Player {

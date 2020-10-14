@@ -35,7 +35,15 @@ if (isset($_POST['surrender'])) {
 
 if (isset($_POST['stand'])) {
     $dealer->hit($deck);
+    if ($dealer->getScore() < 21 && $dealer->getScore() > 15) {
+        if ($dealer->getScore() >= $player->getScore()) {
+            $player->setLost();
+        } else {
+            $dealer->setLost();
+        }
+    }
 }
+
 ?>
 
 <!doctype html>
