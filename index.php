@@ -5,32 +5,32 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
-require "Player.php";
-require "Blackjack.php";
 require "./code/Card.php";
 require "./code/Deck.php";
 require "./code/Suit.php";
+require "Player.php";
+require "Blackjack.php";
 
 session_start();
-if(!isset($_SESSION['blackJack'])) {
-    $blackJack = new Blackjack();
-    $_SESSION['blackJack'] = $blackJack;
-} else {
-    $blackJack = $_SESSION['blackJack'];
+if (!isset($_SESSION['blackJack'])) {
+    $_SESSION['blackJack'] = new Blackjack();
 }
 
 $player = $_SESSION['blackJack']->getPlayer();
 $dealer = $_SESSION['blackJack']->getDealer();
 $deck = $_SESSION['blackJack']->getDeck();
 
-if (isset($_POST['action'])){
-    if ($_POST['action'] == 'hit') {
-        if ($player->hit($deck) == "true") {
-            echo "lost";
-        }
-    }
+if (isset($_POST['hit'])) {
+    $player->hit($deck);
 }
 
+if (isset($_POST['surrender'])) {
+    $player->surrender();
+}
+
+if (isset($_POST['stand'])) {
+    $dealer->hit($deck);
+}
 ?>
 
 <!doctype html>
@@ -41,20 +41,21 @@ if (isset($_POST['action'])){
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <style>
-        .bigCard {
-            font-size: 600%;
-        }
-    </style>
 </head>
 <body>
-<p class="bigCard"><?php foreach($player->getCard ($deck) AS $card) {
-        echo $card->getUnicodeCharacter(true);
-    }?></p>
-<form method="post">
-    <input type="submit" name="action" value="hit">
-    <input type="submit" name="action" value="stand">
-    <input type="submit" name="action" value="surrender">
+<div class="card-display">
+    <p><?php foreach($player->getCard($deck) AS $card) {
+            echo $card->getUnicodeCharacter(true);
+        }?></p>
+    <p> <?php foreach($dealer->getCard($deck) AS $card) {
+            echo $card->getUnicodeCharacter(true);
+        }?></p>
+</div>
+<form action="" method="post">
+    <input name="start" type="submit" value="Start">
+    <input name="hit" type="submit" value="Hit">
+    <input name="stand" type="submit" value="Stand">
+    <input name="surrender" type="submit" value="Surrender">
 </form>
 </body>
 </html>

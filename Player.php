@@ -3,37 +3,42 @@ declare(strict_types=1);
 
 class Player {
 
-    private array $cards;
+    private array $card;
     private bool $lost = false;
-    private bool $gameStart = false;
 
     function __construct(Deck $deck) {
-        $this->cards = [];
-        array_push($this->cards, $deck->drawCard(), $deck->drawCard());
+        $this->card = [];
+        array_push($this->card, $deck->drawCard(), $deck->drawCard());
     }
 
     function hit (Deck $deck) {
-        array_push($this->cards, $deck->drawCard());
+        array_push($this->card, $deck->drawCard());
         if ($this->getScore() > 21) {
-            return $this->hasLost();
+            $this->hasLost();
+        } else {
+            echo "player lost";
+            return $this->card;
         }
-        return $this->cards;
     }
     function surrender () {
         $this->lost = true;
+        echo "player lost";
     }
+
     function getScore () {
         $score = 0;
-        foreach ($this->cards as $value) {
+        foreach ($this->card  as $value) {
             $score += $value->getValue();
         }
         return $score;
     }
+
     function hasLost () {
-        return $this->lost = true;
+        $this->lost = true;
     }
 
     function getCard () {
-        return $this->cards;
+        return $this->card;
     }
+
 }
