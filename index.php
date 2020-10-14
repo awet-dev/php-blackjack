@@ -43,6 +43,10 @@ if (isset($_POST['stand'])) {
     <title>Document</title>
 </head>
 <body>
+<div class="score">
+    <p class="playerScore"><?php echo "playerScore: ".$player->getScore()?></p>
+    <p class="dealerScore"><?php echo "dealerScore: ".$dealer->getScore()?></p>
+</div>
 <div class="card-display">
     <p><?php foreach($player->getCard($deck) AS $card) {
             echo $card->getUnicodeCharacter(true);
@@ -51,11 +55,18 @@ if (isset($_POST['stand'])) {
             echo $card->getUnicodeCharacter(true);
         }?></p>
 </div>
+<div class="result"><?php if($player->hasLost()) { echo "player has lost";}
+    if($dealer->hasLost()) {echo "dealer has lost";}
+?></div>
 <form action="" method="post">
-    <input name="start" type="submit" value="Start">
-    <input name="hit" type="submit" value="Hit">
-    <input name="stand" type="submit" value="Stand">
-    <input name="surrender" type="submit" value="Surrender">
+    <?php if($player->hasLost() || $dealer->hasLost()) :?>
+        <input name="start" type="submit" value="Start">
+    <?php else :?>
+        <input name="hit" type="submit" value="Hit">
+        <input name="stand" type="submit" value="Stand">
+        <input name="surrender" type="submit" value="Surrender">
+    <?php endif; ?>
 </form>
 </body>
 </html>
+

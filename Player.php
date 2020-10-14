@@ -14,15 +14,13 @@ class Player {
     function hit (Deck $deck) {
         array_push($this->card, $deck->drawCard());
         if ($this->getScore() > 21) {
-            $this->hasLost();
+            $this->lost = true;
         } else {
-            echo "player lost";
             return $this->card;
         }
     }
     function surrender () {
         $this->lost = true;
-        echo "player lost";
     }
 
     function getScore () {
@@ -34,7 +32,7 @@ class Player {
     }
 
     function hasLost () {
-        $this->lost = true;
+        return $this->lost;
     }
 
     function getCard () {
