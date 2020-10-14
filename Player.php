@@ -21,6 +21,7 @@ class Player {
     }
     function surrender () {
         $this->lost = true;
+        $this->hasLost();
     }
 
     function getScore () {
