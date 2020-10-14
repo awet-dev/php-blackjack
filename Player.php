@@ -6,6 +6,7 @@ class Player {
     private array $card;
     private bool $lost = false;
     private int $counter = 0;
+    private int $chips = 100;
 
     function __construct(Deck $deck) {
         $this->card = [];
@@ -46,6 +47,10 @@ class Player {
     }
     function setLost () {
         $this->lost = true;
+    }
+    function eatChips($chip) {
+        $this->chips -= $chip;
+        return $this->chips;
     }
 }
 

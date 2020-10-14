@@ -21,12 +21,27 @@ if (!isset($_SESSION['blackJack'])) {
     $_SESSION['blackJack'] = new Blackjack();
 }
 
+if (!isset($_SESSION['chip'])) {
+    $_SESSION['chip'] = "";
+}
+
+
 $player = $_SESSION['blackJack']->getPlayer();
 $dealer = $_SESSION['blackJack']->getDealer();
 $deck = $_SESSION['blackJack']->getDeck();
 
+$errorInput = "border border-danger";
+$errorClass = "";
+
 if (isset($_POST['hit'])) {
-    $player->hit($deck);
+    $_SESSION['chip'] = $_POST['chip'];
+    $chips = $_POST['chip'];
+    if ($chips && $chips >= 5) {
+        $player->hit($deck);
+        var_dump($player->eatChips($chips));
+    } else {
+        $errorClass = $errorInput;
+    }
 }
 
 if (isset($_POST['surrender'])) {
@@ -88,6 +103,7 @@ if (isset($_POST['stand'])) {
             <input name="hit" type="submit" value="Hit">
             <input name="stand" type="submit" value="Stand">
             <input name="surrender" type="submit" value="Surrender">
+            <input class="<?php echo $errorClass?>" name="chip" type="text" value="<?php echo $_SESSION['chip']?>">
         <?php endif; ?>
     </form>
 </div>
