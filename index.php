@@ -34,13 +34,14 @@ if (isset($_POST['surrender'])) {
 }
 
 if (isset($_POST['stand'])) {
-    $dealer->hit($deck);
-    if ($dealer->getScore() < 21) {
+    if ($dealer->getScore() < 21 && $dealer->getScore() > 15) {
         if ($dealer->getScore() >= $player->getScore()) {
             $player->setLost();
         } else {
             $dealer->setLost();
         }
+    } else {
+        $dealer->hit($deck);
     }
 }
 
@@ -60,7 +61,7 @@ if (isset($_POST['stand'])) {
 <body>
 <div class="container">
     <?php if ($player->hasLost()) :?>
-        <div class="alert alert-info" role="alert">
+        <div class="alert alert-danger" role="alert">
             <strong>Oh sorry!</strong> You lost. the dealer has won the game</div>
     <?php elseif ($dealer->hasLost()) :?>
         <div class="alert alert-success" role="alert">

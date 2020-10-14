@@ -5,6 +5,7 @@ class Player {
 
     private array $card;
     private bool $lost = false;
+    private int $counter = 0;
 
     function __construct(Deck $deck) {
         $this->card = [];
@@ -12,7 +13,11 @@ class Player {
     }
 
     function hit (Deck $deck) {
+        $this->counter ++;
         array_push($this->card, $deck->drawCard());
+        if ($this->getScore() == 21 && $this->counter == 1) {
+            $this->lost = true;
+        }
         if ($this->getScore() > 21) {
             $this->lost = true;
         } else {
