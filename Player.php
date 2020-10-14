@@ -3,13 +3,14 @@ declare(strict_types=1);
 
 class Player {
 
-    private array $card;
+    // ==== ctrl j === //  to see the short cut of any file
+    /* @var Card[]*/  // suggest function in another Class
+    private array $card = []; // best practice to set default value while you define property
     private bool $lost = false;
     private int $counter = 0;
     private int $chips = 100;
 
     function __construct(Deck $deck) {
-        $this->card = [];
         array_push($this->card, $deck->drawCard(), $deck->drawCard());
     }
 
